@@ -1,0 +1,9 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+<h1>Restore Database</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="json_file" required>
+    <button type="submit" class="default">Restore</button>
+</form>
+{% endblock %} 

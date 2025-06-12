@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Home - Mobile Galaxy{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Mobile Galaxy</h1>
+    <p>Compare mobile phones, view detailed specs, and find your next device!</p>
+    <a href="{% url 'phone_list' %}" class="cta-btn">Browse Phones</a>
+</div>
+{% endblock %} 

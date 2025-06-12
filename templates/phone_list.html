@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}All Phones{% endblock %}
+{% block content %}
+<h1>All Phones</h1>
+<input type="text" id="search" placeholder="Search phones..." class="search-input">
+{% for company in companies %}
+    <h2 class="company-title">{{ company.name }}</h2>
+    <ul class="phone-list">
+    {% for phone in company.phone_set.all|dictsort:"model" %}
+        <li class="phone-card">
+            <a href="{% url 'phone_detail' phone.pk %}">{{ phone.model }}</a>
+        </li>
+    {% empty %}
+        <li>No phones found.</li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %} 

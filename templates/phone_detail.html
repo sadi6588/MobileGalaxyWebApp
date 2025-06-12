@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ phone.company.name }} {{ phone.model }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>{{ phone.company.name }} {{ phone.model }}</h1>
+    {% if phone.image %}
+        <img src="{{ phone.image.url }}" alt="{{ phone.model }}" class="phone-img">
+    {% endif %}
+    <div class="specs">
+        {% for key, value in phone.specs.items %}
+            <div class="spec-row">
+                <span class="spec-key">{{ key|capfirst }}:</span>
+                <span class="spec-value">{{ value }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

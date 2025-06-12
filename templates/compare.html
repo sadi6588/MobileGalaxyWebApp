@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Compare Phones{% endblock %}
+{% block content %}
+<h1>Compare Phones</h1>
+<form method="get">
+    <label>Select first phone:</label>
+    <select name="phone1">
+        <option value="">-- Select --</option>
+        {% for phone in phones %}
+            <option value="{{ phone.pk }}" {% if request.GET.phone1 == phone.pk|stringformat:"s" %}selected{% endif %}>{{ phone.company.name }} {{ phone.model }}</option>
+        {% endfor %}
+    </select>
+    <label>Select second phone:</label>
+    <select name="phone2">
+        <option value="">-- Select --</option>
+        {% for phone in phones %}
+            <option value="{{ phone.pk }}" {% if request.GET.phone2 == phone.pk|stringformat:"s" %}selected{% endif %}>{{ phone.company.name }} {{ phone.model }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="cta-btn">Compare</button>
+</form>
+{% if phone1 and phone2 %}
+    <div class="card">
+        <h2>Comparison</h2>
+        <div style="overflow-x:auto;">
+        <table style="width:100%;color:var(--text);border-collapse:collapse;">
+            <tr>
+                <th></th>
+                <th style="text-align:center;">
+                    {% if phone1.image %}
+                        <img src="{{ phone1.image.url }}" alt="{{ phone1.model }}" style="max-width:80px;max-height:80px;display:block;margin:auto;">
+                    {% endif %}
+                    {{ phone1.company.name }} {{ phone1.model }}
+                </th>
+                <th style="text-align:center;">
+                    {% if phone2.image %}
+                        <img src="{{ phone2.image.url }}" alt="{{ phone2.model }}" style="max-width:80px;max-height:80px;display:block;margin:auto;">
+                    {% endif %}
+                    {{ phone2.company.name }} {{ phone2.model }}
+                </th>
+            </tr>
+            {% for key in all_keys %}
+            <tr>
+                <td class="spec-key">{{ key|capfirst }}</td>
+                <td class="spec-value">{{ phone1.specs|get_item:key|default:'-' }}</td>
+                <td class="spec-value">{{ phone2.specs|get_item:key|default:'-' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </div>
+{% endif %}
+{% endblock %} 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="cta-btn">Update Profile</button>
+    </form>
+    <a href="{% url 'change_password' %}" class="cta-btn">Change Password</a>
+    {% if device and not device.confirmed %}
+        <hr>
+        <h2>2-Step Verification Setup</h2>
+        <p>Scan this QR code with Google Authenticator or a compatible app:</p>
+        <img src="data:image/png;base64,{{ qr_code }}" alt="2FA QR Code" style="width:200px;height:200px;">
+        <p>Or enter this secret manually: <b>{{ device.bin_key|default_if_none:'' }}</b></p>
+        <p><b>After scanning, log out and log in again to complete 2FA setup.</b></p>
+    {% endif %}
+</div>
+{% endblock %} 
